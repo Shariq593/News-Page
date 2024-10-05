@@ -2,21 +2,21 @@ import NewsList from "@/components/news-List";
 import { getAvailableNewsMonths, getAvailableNewsYears, getNewsForYear, getNewsForYearAndMonth } from "@/lib/news";
 import Link from "next/link";
 
-export default function FilteredNewsPage({params}){
+export default async function  FilteredNewsPage({params}){
     const filter = params.filter;
     const selectedYear = filter?.[0]
     const selectedMonth = filter?.[1];
     
     let news;
-    let links = getAvailableNewsYears();
+    let links = await getAvailableNewsYears();
 
 
     if(selectedYear && !selectedMonth){
-        news = getNewsForYear(selectedYear)
+        news = await getNewsForYear(selectedYear)
         links = getAvailableNewsMonths(selectedYear)
     }
     if(selectedYear && selectedMonth){
-        news = getNewsForYearAndMonth(selectedYear, selectedMonth)
+        news = await getNewsForYearAndMonth(selectedYear, selectedMonth)
         links = []
 
     }
@@ -25,10 +25,10 @@ export default function FilteredNewsPage({params}){
     if(news && news.length >0){
         newsContent = <NewsList news={ news} />
     }
-
+  const abvailableYears =     getAvailableNewsYears()
     if (
-      (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
-      (selectedMonth && !getAvailableNewsMonths(selectedYear).includes(+selectedMonth))
+      (selectedYear && !abvailableYears.includes(+selectedYear)) ||
+      (selectedMonth && !getAailableNewsMonths(+selectedYear).includes(+selectedMonth))
     ) {
       throw new Error("Invalid Fiter.");
     }

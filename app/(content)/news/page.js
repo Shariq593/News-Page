@@ -1,12 +1,12 @@
-import Link from "next/link";
-import { DUMMY_NEWS } from "@/dummy-news";
-import Image from "next/image";
 import NewsList from "@/components/news-List";
+import { getAllNews } from "@/lib/news";
 
-export default function newsPage() {
+export default async function newsPage() {
+  const news = await  getAllNews()
+  
   return (
     <>
-      <NewsList news={DUMMY_NEWS} />
+      <NewsList news={news} />;
     </>
   );
 }
