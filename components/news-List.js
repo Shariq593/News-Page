@@ -1,6 +1,9 @@
 import Link from "next/link";
 
 export default function NewsList ({news}){
+    if (!Array.isArray(news)) {
+        return null
+    }
     return(
         <ul className="news-list">
                 {news.map((newsItem ) => (
